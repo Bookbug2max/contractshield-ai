@@ -1,0 +1,56 @@
+# Dependencies
+node_modules/
+apps/web/node_modules/
+apps/api/.venv/
+apps/api/__pycache__/
+apps/api/**/__pycache__/
+*.pyc
+.pytest_cache/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+apps/web/.env
+apps/web/.env.local
+apps/api/.env
+
+# Build outputs
+apps/web/.next/
+apps/web/out/
+apps/web/build/
+dist/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+coverage/
+htmlcov/
+.coverage
+
+# Supabase
+supabase/.temp/
+
+# Misc
+*.tsbuildinfo
+# Ignore environment files by default, but allow safe templates
+.env*
+!.env.example
+!.env.*.example
+
+# Generated Python package metadata
+*.egg-info/
