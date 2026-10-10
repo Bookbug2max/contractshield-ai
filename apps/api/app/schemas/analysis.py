@@ -2,7 +2,6 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
-
 Severity = Literal["high", "medium", "low"]
 
 
@@ -15,6 +14,7 @@ class Finding(BaseModel):
     description: str
     recommendation: str
     evidence: str
+    patched_code: str | None = None
 
 
 class FindingSummary(BaseModel):

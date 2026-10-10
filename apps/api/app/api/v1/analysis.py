@@ -1,5 +1,5 @@
-from pydantic import BaseModel, Field, field_validator
 from fastapi import APIRouter
+from pydantic import BaseModel, Field, field_validator
 
 from app.schemas.analysis import SolidityAnalysisResponse
 from app.services.solidity_analyzer import analyze_solidity

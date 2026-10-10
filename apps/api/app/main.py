@@ -4,7 +4,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.v1 import analysis, health
 from app.core.config import settings
 
-
 app = FastAPI(
     title="ContractShield API",
     description=(
