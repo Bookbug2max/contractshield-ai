@@ -22,6 +22,7 @@ type Finding = {
   description: string;
   recommendation: string;
   evidence: string;
+  patched_code: string | null;
 };
 
 type AnalysisResponse = {
@@ -50,6 +51,59 @@ function ShieldMark() {
 function apiErrorMessage(error: unknown): string {
   if (error instanceof Error) return error.message;
   return "The analysis request failed. Check the API and try again.";
+}
+
+function computeDiff(original: string, patched: string): Array<{ type: "same" | "added" | "removed"; line: string }> {
+  const origLines = original.split("\n");
+  const patchedLines = patched.split("\n");
+  const maxLen = Math.max(origLines.length, patchedLines.length);
+  const result: Array<{ type: "same" | "added" | "removed"; line: string }> = [];
+  
+  for (let i = 0; i < maxLen; i++) {
+    const origLine = i < origLines.length ? origLines[i] : null;
+    const patchedLine = i < patchedLines.length ? patchedLines[i] : null;
+    
+    if (origLine === patchedLine) {
+      if (origLine !== null) {
+        result.push({ type: "same", line: origLine });
+      }
+    } else if (origLine !== null && patchedLine !== null) {
+      result.push({ type: "removed", line: origLine });
+      result.push({ type: "added", line: patchedLine });
+    } else if (origLine !== null) {
+      result.push({ type: "removed", line: origLine });
+    } else if (patchedLine !== null) {
+      result.push({ type: "added", line: patchedLine });
+    }
+  }
+  
+  return result;
+}
+
+function PatchDiff({ original, patched }: { original: string; patched: string }) {
+  const diff = computeDiff(original, patched);
+  
+  return (
+    <div className="patch-diff">
+      <div className="patch-header">
+        <span className="patch-label">Proposed Patch (Pattern Suggestion)</span>
+        <span className="patch-disclaimer">
+          This is a conservative pattern-based suggestion. It has not been compiled or tested.
+          Always verify in a full development environment before deployment.
+        </span>
+      </div>
+      <div className="patch-content">
+        {diff.map((item, idx) => (
+          <div key={idx} className={`patch-line ${item.type}`}>
+            <span className="patch-line-marker">
+              {item.type === "added" ? "+" : item.type === "removed" ? "-" : " "}
+            </span>
+            <pre className="patch-line-code"><code>{item.line}</code></pre>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export default function Home() {
@@ -293,6 +347,9 @@ export default function Home() {
                       <strong>Recommendation</strong>
                       <p>{finding.recommendation}</p>
                     </div>
+                    {finding.patched_code && source && (
+                      <PatchDiff original={source} patched={finding.patched_code} />
+                    )}
                     <div className="rule-note">Pattern match · Verify in contract context</div>
                   </article>
                 ))}

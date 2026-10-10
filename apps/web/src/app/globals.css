@@ -966,3 +966,80 @@ a {
     transition-duration: 0.01ms !important;
   }
 }
+
+.patch-diff {
+  margin-top: 12px;
+  border: 1px solid #e8efe3;
+  border-radius: 8px;
+  background: #fafcf9;
+  overflow: hidden;
+}
+
+.patch-header {
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  border-bottom: 1px solid #e8efe3;
+  background: #f4f8f3;
+}
+
+.patch-label {
+  color: #5c7650;
+  font-size: 9px;
+  font-weight: 650;
+}
+
+.patch-disclaimer {
+  color: #966f37;
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+.patch-content {
+  max-height: 300px;
+  overflow: auto;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 9px;
+  line-height: 1.6;
+}
+
+.patch-line {
+  display: flex;
+  align-items: flex-start;
+  padding: 2px 12px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.patch-line.removed {
+  background: #fff3f0;
+  color: #a74f3d;
+}
+
+.patch-line.added {
+  background: #f0f5eb;
+  color: #6a8c5a;
+}
+
+.patch-line.same {
+  color: #77847c;
+}
+
+.patch-line-marker {
+  flex: none;
+  width: 14px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.patch-line-code {
+  flex: 1;
+  margin: 0;
+  padding: 0;
+}
+
+.patch-line-code code {
+  display: block;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
